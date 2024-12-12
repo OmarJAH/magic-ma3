@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Magic Deck Filter</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Header section for top-level navigation. -->
+  <header>
+    <div id="logo-title-container" style="display: flex; align-items: center; gap: 10px;">
+      <img src="/images/Magiccardback.jpg" alt="Logo" id="site-logo" />
+      <h1>Magic Deck Selector</h1>
+      <img src="/images/Magiccardback.jpg" alt="Logo" id="site-logo" />
+    </div>
+    <!--<button id="toggle-filters" class="toggle-filters-btn" aria-expanded="false" aria-controls="filter-row">Filter</button> -->
+    <div id="button-container" style="display: flex; align-items: center; gap: 10px;">
+      <button id="reset-button-random" class="action-btn hidden">Reset</button>
+      <button id="random-button" class="action-btn">Zufälliges Deck</button>
+    </div>
+
+    <button id="toggle-filters" class="toggle-filters-btn" aria-expanded="false" aria-controls="filter-row">Filter</button>
+  </header>
+  
+
+  <!-- Main content area for decks -->
+  <main class="content">
+    <!-- New Filter Row (Hidden by Default) -->
+    <div id="filter-row" class="filter-row hidden">
+      <div id="filter-container" class="filter-container"></div>
+      <div class="filter-actions">
+        <button id="reset-button" class="action-btn">Filter Zurücksetzen</button>
+      </div>
+    </div>
+    
+    <!-- Selected Filters Box in Main Frame -->
+    <div id="selected-filters-main" class="selected-filters-main" style="display: none;">
+      <h3>Ausgewählte Filter:</h3>
+      <div id="filters-list-main" class="filters-list-main">
+        <!-- Selected filters will appear here -->
+      </div>
+    </div>
+    
+    <!-- Container that holds the deck cards -->
+    <div id="data-container" class="data-container" role="list" aria-live="polite"></div>
+
+    <!-- Message displayed when no data matches the filters -->
+    <div class="no-data" id="no-data-message" style="display: none;" aria-live="assertive">
+      Keine Ergebnisse gefunden.
+    </div>
+  </main>
+
+  <!-- Card template for reuse -->
+  <template id="card-template">
+    <div class="card" role="listitem">
+      <div class="card-content">
+      </div>
+    </div>
+  </template>
+
+  <!-- Use type="module" for ES6 Modules -->
+  <script type="module" src="scripts/main.js"></script>
+</body>
+</html>

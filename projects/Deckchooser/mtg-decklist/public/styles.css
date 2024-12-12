@@ -1,0 +1,418 @@
+/* styles.css */
+
+/* Custom Font: Planewalker - Regular */
+@font-face {
+  font-family: 'Planewalker';
+  src: url('fonts/planewalker/Planewalker.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Custom Font: Planewalker - Bold */
+@font-face {
+  font-family: 'Planewalker';
+  src: url('fonts/planewalker/Planewalker Bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Custom Font: Planewalker - Italic */
+@font-face {
+  font-family: 'Planewalker';
+  src: url('fonts/planewalker/Planewalker Italic.otf') format('opentype');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* Custom Font: Planewalker - Bold Italic */
+@font-face {
+  font-family: 'Planewalker';
+  src: url('fonts/planewalker/Planewalker Bold Italic.otf') format('opentype');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+
+/* Basic Reset and Typography */
+body {
+  font-family: 'Planewalker', sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Keeps the left, center, and right sections aligned */
+  background-color: #7a3900;
+  color: white;
+  padding: 10px 20px;
+  font-weight: 700;
+}
+
+h1 {
+  margin: 0;
+  font-size: 24px;
+}
+
+#logo-title-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+#logo-title-container img {
+  height: 40px; /* Adjust size as needed */
+  width: auto;  /* Maintain aspect ratio */
+  object-fit: contain; /* Ensures the image fits nicely */
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+#button-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center; /* Center-aligns the buttons within this container */
+  flex-grow: 1; /* Allows it to grow and center itself in the header */
+}
+
+#toggle-filters {
+  margin-left: auto; /* Pushes the "Filter" button to the far right */
+}
+
+button, .action-btn, .toggle-filters-btn {
+  font-family: 'Planewalker', sans-serif;
+}
+
+.toggle-filters-btn {
+  background-color: #ffffff;
+  color: black;
+  border:1px solid #575757;
+  padding: 8px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+  margin-right: 10px;
+}
+
+.toggle-filters-btn:hover {
+  background-color: #d2d2d2;
+}
+
+.action-btn {
+  padding: 8px 16px;
+  background-color: #ffffff;
+  color: black;
+  border:1px solid #575757;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.action-btn:hover {
+  background-color: #d2d2d2;
+}
+
+#reset-button-random.hidden {
+  display: none;
+}
+
+
+/* Filter Row */
+.filter-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 0 20px;
+  transition: max-height 0.3s ease, opacity 0.3s ease;
+}
+
+.filter-row.hidden {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+}
+
+.filter-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.filter-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+/*
+.action-btn {
+  padding: 8px 16px;
+  background-color: #ff5722;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.action-btn:hover {
+  background-color: #e64a19;
+}
+*/
+/* Selected Filters Box in Main Frame */
+.selected-filters-main {
+  background-color: #f0f0f0;
+  padding: 10px;
+  border-radius: 5px;
+  margin: 0 auto 20px auto;
+  max-width: 1200px;
+}
+
+.selected-filters-main h3 {
+  margin: 0 0 10px 0;
+  font-size: 16px;
+  color: #7a3900;
+}
+
+.filters-list-main {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.filter-tag-main {
+  background-color: #7a3900;
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 15px;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.filter-tag-main span {
+  margin-left: 5px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+/* Animate filter tag removal */
+.filter-tag-main.removing {
+  animation: fadeOut 0.3s ease-in-out forwards;
+}
+
+/* Fade In Animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Fade Out Animation */
+@keyframes fadeOut {
+  from { opacity: 1; transform: translateY(0); }
+  to { opacity: 0; transform: translateY(-10px); }
+}
+
+/* Cards Grid */
+.data-container {
+  display: grid; 
+  grid-template-columns: repeat(auto-fit, minmax(200px, max-content));
+  gap: 20px; 
+  padding: 20px; 
+  justify-content: center;
+}
+
+/* Card Styling */
+.card {
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+  height: 300px;
+  width: 200px;
+  background-size: cover;
+  background-position: center;
+  border: 2px solid #000000;
+}
+
+/* Card Content */
+.card-content {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  right: 10px;
+  z-index: 2;
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(50, 50, 50, 0.462);
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  font-family: 'Planewalker', Tahoma, Geneva, Verdana, sans-serif;
+
+  /* Subtle background to make the text stand out */
+  background: rgb(255, 255, 255);
+  border-radius: 5px;
+  padding: 10px;
+  font-weight: 700;
+}
+
+.card-content p {
+  margin: 5px 0;
+  line-height: 1.4;
+  font-size: 12px;
+  color: #333;
+}
+
+.card-content strong {
+  font-size: 12px;
+  color: #7a3900; 
+  margin-right: 5px;
+}
+
+/* Pseudo-element overlay on hover */
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  
+  /* Start with no overlay (transparent) */
+  background: rgba(207, 207, 207, 0);
+  transition: background 0.3s ease;
+}
+
+/* On hover: reveal the content and show the overlay */
+.card:hover .card-content {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.card:hover::before {
+  /* Darken the overlay to make stats more visible */
+  background: rgba(255, 255, 255, 0.5);
+}
+
+/* Highlighted Card */
+.card.highlighted {
+  box-shadow: 0 0 10px 5px #747474;
+  transform: scale(1.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* No Data Message */
+.no-data {
+  text-align: center;
+  font-size: 20px;
+  color: #333;
+  margin-top: 20px;
+}
+
+/* Multi-select Dropdown */
+.multi-select-dropdown {
+  position: relative;
+  background-color: #7a3900e5;
+  color: #fff;
+  padding: 8px; /* reduced from 10px */
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 12px; /* reduced from ~16px */
+}
+
+.multi-select-dropdown .multi-select-header {
+  user-select: none;
+}
+
+.multi-select-dropdown .multi-select-options {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #7a3900e5;
+  padding: 8px;
+  border-radius: 5px;
+  z-index: 999;
+  width: 100%;
+  font-size: 12px;
+}
+
+/* Enable dropdown functionality */
+.multi-select-dropdown.open .multi-select-options {
+  display: block;
+}
+
+.multi-select-options label {
+  display: flex;
+  align-items: center;
+  margin-bottom: 3px;
+}
+
+.multi-select-options input[type="checkbox"] {
+  margin-right: 5px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .toggle-filters-btn {
+    font-size: 14px;
+    padding: 6px 10px;
+    margin-bottom: 10px;
+  }
+
+  .filter-row {
+    flex-direction: column;
+    align-items: stretch;
+    margin: 10px auto;
+  }
+
+  .filter-container {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .filter-actions {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .action-btn {
+    width: 48%;
+  }
+
+  .filters-list-main {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .card {
+    width: 150px;
+    height: 250px;
+  }
+
+  .card-content p {
+    font-size: 12px;
+  }
+}
