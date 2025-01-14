@@ -1,4 +1,4 @@
-const page = 4; // CHANGE THIS VALUE FOR NEW PAGES - Every page gets automatically the right page name and the 36 x 2 decks on 2 pages
+const page = 6; // CHANGE THIS VALUE FOR NEW PAGES - Every page gets automatically the right page name and the 36 x 2 decks on 2 pages
 const startIndex = 72 * (page - 1);
 const pageNames = [
 		'Alpha',
