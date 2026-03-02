@@ -18,28 +18,40 @@ type DeckData = {
     }[]
 }
 
-const firstDeckNr = 1
+let firstDeckNr = 1
+let fetchedData;
 
 async function getData() {
     const url = `https://docs.google.com/spreadsheets/d/1epeuYV1FmJpVYUr30DVS8bPJ254rxmYtGfl3eooZm9M/gviz/tq?tqx=out:json&tq&gid=1153682861`;
     try {
         const req = await fetch(url)
-        const json = JSON.parse((await req.text()).substring(47).slice(0, -2))
-        const sixBoxesData = transformJson(json)
-        console.log(sixBoxesData)
-        sixBoxesData.slice(0, 3).map(sixBox => {
-            const el = document.createElement("div");
-            el.innerHTML = buildSixBox(sixBox);
-            document.getElementById('table1').appendChild(el.firstChild);
-        })
-        sixBoxesData.slice(3, 6).map(sixBox => {
-            const el = document.createElement("div");
-            el.innerHTML = buildSixBox(sixBox);
-            document.getElementById('table2').appendChild(el.firstChild);
-        })
+        fetchedData = JSON.parse((await req.text()).substring(47).slice(0, -2))
+        render()
     } catch (error: any) {
         console.error(error.message);
     }
+}
+
+function render() {
+    const sixBoxesData = transformJson(fetchedData)
+    console.log(sixBoxesData)
+    document.getElementById('table1').innerHTML = "";
+    sixBoxesData.slice(0, 3).map(sixBox => {
+        const el = document.createElement("div");
+        el.innerHTML = buildSixBox(sixBox);
+        document.getElementById('table1').appendChild(el.firstChild);
+    })
+    document.getElementById('table2').innerHTML = "";
+    sixBoxesData.slice(3, 6).map(sixBox => {
+        const el = document.createElement("div");
+        el.innerHTML = buildSixBox(sixBox);
+        document.getElementById('table2').appendChild(el.firstChild);
+    })
+}
+
+function renderPage(page: number) {
+    firstDeckNr = 36 * (page - 1) + 1;
+    this.render()
 }
 
 function transformJson(json: any) {
@@ -223,11 +235,11 @@ function htmlCardType(string) {
 }
 
 function htmlCreatureType(string) {
-    return string ? string.split(',').map(s => htmlChip(s, 'chip-creature')).join(''): "";
+    return string ? string.split(',').map(s => htmlChip(s, 'chip-creature')).join('') : "";
 }
 
 function htmlCategories(string) {
-    return string ? string.split(',').map(s => htmlChip(s, 'chip-category')).join(''): "";
+    return string ? string.split(',').map(s => htmlChip(s, 'chip-category')).join('') : "";
 }
 
 
