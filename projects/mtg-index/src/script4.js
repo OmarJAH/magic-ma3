@@ -75,7 +75,7 @@ function createChipsData(row) {
 }
 function buildRowHtml(deckData) {
     return `<td class="nr">${deckData.nr}</td>`
-        + `<td><div class="image">${getImageHtml(deckData.nr)}</div></td>`
+        + `<td class="image">${getImageHtml(deckData.nr)}</td>`
         + `<td class="mana">${getManaHtml(deckData.farben)}</td>`
         + `<td class="difficulty">${getDifficultyHtml(deckData.schwierigkeit)}</td>`
         + `<td class="duration">${getDurationHtml(deckData.spieldauer)}</td>`
