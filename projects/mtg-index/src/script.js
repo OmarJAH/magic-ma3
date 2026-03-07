@@ -36,7 +36,7 @@ function createDeckData(row) {
     return {
         nr: row.c[1].f,
         farben: row.c[3].v,
-        schwierigkeit: row.c[1].f == 5 ? "Extrem" : row.c[4].v, // todo delete extrem hack
+        schwierigkeit: row.c[4].v,
         spieldauer: row.c[5].v,
         siegesbedingung: row.c[6].v,
         setname: row.c[7]?.v,
@@ -92,11 +92,29 @@ const manaSymbols = {
 };
 function getManaHtml(manaString) {
     let result = "";
-    // todo if letters > 3 -> make 2 rows, upper row has less symbols than lower row
-    for (const letter of manaString) {
-        result += `<img class="mana-symbol" src="${manaSymbols[letter]}"/>`;
+    if (manaString.length > 3) {
+        const firstRowLetters = manaString.slice(0, manaString.length / 2);
+        const firstRowClass = manaString.length === 4 ? "lefty" : "";
+        const secondRowLetters = manaString.slice(manaString.length / 2);
+        const secondRowClass = manaString.length === 4 ? "righty" : "";
+        return createManaSymbolRowHtml(firstRowLetters, firstRowClass) + createManaSymbolRowHtml(secondRowLetters, secondRowClass);
     }
-    return result;
+    else {
+        for (const letter of manaString) {
+            result += getManaSymbolHtml(letter);
+        }
+        return result;
+    }
+}
+function createManaSymbolRowHtml(manaString, className = "") {
+    let manaSymbolsHtml = "";
+    for (const letter of manaString) {
+        manaSymbolsHtml += getManaSymbolHtml(letter);
+    }
+    return '<div class="mana-symbol-row ' + className + '">' + manaSymbolsHtml + '</div>';
+}
+function getManaSymbolHtml(manaLetter) {
+    return `<img class="mana-symbol" src="${manaSymbols[manaLetter]}"/>`;
 }
 function getImageHtml(nr) {
     let fileName = String(nr);
@@ -152,7 +170,14 @@ function htmlChip(text, className) {
     if (!text) {
         return "";
     }
-    return `<div class="chip ${className}">${text}</div>`;
+    let htmlIcon = "";
+    if (className === "chip-set") {
+        htmlIcon = `<img class="chip-icon" src="${getImagePathRpgIcon("rising-sun")}"/>`;
+    }
+    return `<div class="chip ${className}">${htmlIcon}${text}</div>`;
+}
+function getImagePathRpgIcon(rpgIcon) {
+    return `https://raw.githubusercontent.com/OmarJAH/magic-ma3/refs/heads/main/resources/images/assets/rpg-icons/${rpgIcon}.png`;
 }
 function htmlSet(string) {
     return string ? string.split(',').map(s => htmlChip(s, 'chip-set')).join('') : "";
@@ -167,13 +192,14 @@ function htmlCategories(string) {
     return string ? string.split(',').map(s => htmlChip(s, 'chip-category')).join('') : "";
 }
 function getTagsHtml(item) {
-    return `${htmlSet(item.setname)}${htmlCardType(item.kartentypen)}${htmlCreatureType(item.kreaturentypen)}${htmlCategories(item.kategorien)}`;
+    return `<div class="chips-container">${htmlSet(item.setname)}${htmlCardType(item.kartentypen)}${htmlCreatureType(item.kreaturentypen)}${htmlCategories(item.kategorien)}</div>`;
 }
 function getWinconHtml(siegesbedingung) {
     switch (siegesbedingung) {
         case "Beatdown":
             return beatdownHtml;
-        default: return "";
+        default:
+            return "";
     }
 }
 const beatdownHtml = 'todo';
