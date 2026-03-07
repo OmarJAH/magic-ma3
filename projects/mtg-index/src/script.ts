@@ -242,9 +242,9 @@ function getTagsHtml(item: DeckData) {
 }
 
 function getWinconHtml(siegesbedingung: WinCondition) {
-   return "<div><img src='" + getWinconImage(siegesbedingung) + "'/>"+siegesbedingung+"</div>"
+   return "<div class='wincon-"+siegesbedingung.toLowerCase()+"'><img class='wincon-icon' src='" + getWinconImage(siegesbedingung) + "'/>"+siegesbedingung+"</div>"
 }
 
 function getWinconImage(siegesbedingung: WinCondition) {
-    return `https://raw.githubusercontent.com/OmarJAH/magic-ma3/main/resources/images/assets/win-conditions/${siegesbedingung.toLowerCase()}.png`
+    return `https://raw.githubusercontent.com/OmarJAH/magic-ma3/main/resources/images/assets/rpg-icons/${siegesbedingung.toLowerCase()}.png`
 }

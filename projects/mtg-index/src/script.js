@@ -191,8 +191,8 @@ function getTagsHtml(item) {
     return `<div class="chips-container">${htmlSet(item.setname)}${htmlCardType(item.kartentypen)}${htmlCreatureType(item.kreaturentypen)}${htmlCategories(item.kategorien)}</div>`;
 }
 function getWinconHtml(siegesbedingung) {
-    return "<div><img src='" + getWinconImage(siegesbedingung) + "'/>" + siegesbedingung + "</div>";
+    return "<div class='wincon-" + siegesbedingung.toLowerCase() + "'><img class='wincon-icon' src='" + getWinconImage(siegesbedingung) + "'/>" + siegesbedingung + "</div>";
 }
 function getWinconImage(siegesbedingung) {
-    return `https://raw.githubusercontent.com/OmarJAH/magic-ma3/main/resources/images/assets/win-conditions/${siegesbedingung.toLowerCase()}.png`;
+    return `https://raw.githubusercontent.com/OmarJAH/magic-ma3/main/resources/images/assets/rpg-icons/${siegesbedingung.toLowerCase()}.png`;
 }
