@@ -248,3 +248,5 @@ function getWinconHtml(siegesbedingung: WinCondition) {
 function getWinconImage(siegesbedingung: WinCondition) {
     return `https://raw.githubusercontent.com/OmarJAH/magic-ma3/main/resources/images/assets/rpg-icons/${siegesbedingung.toLowerCase()}.png`
 }
+
+// todo eventuell wincondition icon alleine in chip- text rechts daneben

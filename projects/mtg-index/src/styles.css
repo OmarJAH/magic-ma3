@@ -364,6 +364,7 @@ div.single-box {
 .difficulty-easy {
     background: #87B235;
     border: #395306 solid 1px;
+
     .difficulty-label {
         /*color: #395306;*/
         text-shadow: 0 1px 1px #395306;
@@ -373,6 +374,7 @@ div.single-box {
 .difficulty-medium {
     background: #ECAC30;
     border: #7b4f00 solid 1px;
+
     .difficulty-label {
         /*color: #7b4f00;*/
         text-shadow: 0 1px 1px #7b4f00;
@@ -382,6 +384,7 @@ div.single-box {
 .difficulty-hard {
     background: #EA4D20;
     border: #5e1a07 solid 1px;
+
     .difficulty-label {
         /*color: #5e1a07;*/
         text-shadow: 0 1px 1px #5e1a07;
@@ -391,6 +394,7 @@ div.single-box {
 .difficulty-extrem {
     background: #D23425;
     border: #4e0904 solid 1px;
+
     .difficulty-label {
         /*color: #4e0904;*/
         text-shadow: 0 1px 1px #4e0904;
@@ -436,19 +440,19 @@ div.single-box {
 }
 
 .chip-set {
-    background: #3aa76d33;
+    background: #3aa76d53;
     border: 1px solid #2f7e53;
     color: #1f4f35;
 }
 
 .chip-card {
-    background: #c96a4a33;
+    background: #c96a4a55;
     border: 1px solid #9a4d34;
     color: #5e2d1f;
 }
 
 .chip-creature {
-    background: #4f86c633;
+    background: #4f86c653;
     border: 1px solid #3d6798;
     color: #24415f;
 }
@@ -465,25 +469,65 @@ div.single-box {
     font-weight: bold;
     padding-right: 10px;
     width: 110px;
+
     > div {
-        padding: 2px 4px;
+        height: 34px;
+        width: 102px;
         display: inline-flex;
         align-items: center;
         border-radius: 8px;
         white-space: nowrap;
+        color: #fff;
+        justify-content: center;
     }
 }
 
 .wincon-icon {
-    height: 18px;
-    margin-right: 2px;
+    height: 24px;
+    margin-right: 4px;
     vertical-align: middle;
 }
 
-.wincon-beatdown { background-color: #E53935; color: #fff; text-shadow: 0 1px 1px #760c08; border: 1px solid #760c08;  }
-.wincon-spellslinger { background-color: #FB8C00; color: #fff; }
-.wincon-lifedrain { background-color: #6A1B9A; color: #fff; }
-.wincon-toxic { background-color: #2E7D32; color: #fff; }
-.wincon-mill { background-color: #1565C0; color: #fff; }
-.wincon-support { background-color: #00838F; color: #fff; }
-.wincon-wincon { background-color: #424242; color: #fff; }
+.wincon-beatdown {
+    background-color: #E53935;
+    text-shadow: 0 1px 1px #760c08;
+    border: 1px solid #760c08;
+}
+
+.wincon-spellslinger {
+    background-color: #3949AB;
+    text-shadow: 0 1px 1px #1A237E;
+    border: 1px solid #1A237E;
+
+
+}
+
+.wincon-lifedrain {
+    background-color: #6A1B9A;
+    text-shadow: 0 1px 1px #3a045a;
+    border: 1px solid #3a045a;
+}
+
+.wincon-toxic {
+    background-color: #2E7D32;
+    text-shadow: 0 1px 1px #035709;
+    border: 1px solid #035709;
+}
+
+.wincon-mill {
+    background-color: #1565C0;
+    text-shadow: 0 1px 1px #02356f;
+    border: 1px solid #02356f;
+}
+
+.wincon-support {
+    background-color: #fbc800;
+    text-shadow: 0 1px 1px #a37e00;
+    border: 1px solid #a37e00;
+}
+
+.wincon-wincon {
+    background-color: #d49e00;
+    text-shadow: 0 1px 1px #8e6700;
+    border: 1px solid #8e6700;
+}
