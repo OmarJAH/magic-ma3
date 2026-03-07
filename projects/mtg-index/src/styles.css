@@ -4,7 +4,8 @@ html, body {
     /* Reset the document's padding values */
     padding: 0;
     /* Use the platform's native font as the default */
-    font-family: "Roboto", -apple-system, "San Francisco", "Segoe UI", "Helvetica Neue", sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Helvetica Neue, Arial, sans-serif !important;
+    /*font-family: "Roboto", -apple-system, "San Francisco", "Segoe UI", "Helvetica Neue", sans-serif;*/
     /* Define a reasonable base font size */
     font-size: 12pt;
 
@@ -173,6 +174,7 @@ h1 {
 
 table {
     width: 100%;
+    height: 1045px;
     background-color: #fff;
     border-radius: 4px;
     border-width: 1px;
@@ -293,10 +295,8 @@ div.single-box {
 }
 
 .image {
-    width: 74px;
-
     > img {
-        height: 52px;
+        height: 55px;
         border: solid 1px black;
     }
 }
@@ -351,34 +351,55 @@ div.single-box {
     width: 50px;
     border-radius: 8px;
     text-align: center;
-    border: black solid 1px;
 }
 
 .difficulty-label {
     font-size: 9px;
     height: 10px;
+    font-weight: bolder;
+    color: white;
 }
 
 .difficulty-stars {
     font-size: 10px;
-    padding-top: 1px;
+    text-shadow: 0 1px 1px black;
 }
 
 
 .difficulty-easy {
     background: #87B235;
+    border: #395306 solid 1px;
+    .difficulty-label {
+        /*color: #395306;*/
+        text-shadow: 0 1px 1px #395306;
+    }
 }
 
 .difficulty-medium {
     background: #ECAC30;
+    border: #7b4f00 solid 1px;
+    .difficulty-label {
+        /*color: #7b4f00;*/
+        text-shadow: 0 1px 1px #7b4f00;
+    }
 }
 
 .difficulty-hard {
     background: #EA4D20;
+    border: #5e1a07 solid 1px;
+    .difficulty-label {
+        /*color: #5e1a07;*/
+        text-shadow: 0 1px 1px #5e1a07;
+    }
 }
 
 .difficulty-extrem {
     background: #D23425;
+    border: #4e0904 solid 1px;
+    .difficulty-label {
+        /*color: #4e0904;*/
+        text-shadow: 0 1px 1px #4e0904;
+    }
 }
 
 .duration {
@@ -405,34 +426,48 @@ div.single-box {
 
 .chip {
     font-size: 11px;
-    border-radius: 22px;
-    border: 1px solid #7d7d7d;
-    height: 17px;
-    line-height: 14px;
-    padding: 0 4px;
+    height: 18px;
+    padding: 0 6px;
     text-wrap-mode: nowrap;
     margin-right: 4px;
     vertical-align: top;
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
     margin-bottom: 4px;
+    border-radius: 999px;
+    line-height: 2;
+    border: 1px solid transparent;
+    white-space: nowrap;
 }
-
 
 .chip-set {
-    background: #1aac0047;
+    background: #3aa76d33;
+    border: 1px solid #2f7e53;
+    color: #1f4f35;
 }
-
 
 .chip-card {
-    background: #ff00004f;
+    background: #c96a4a33;
+    border: 1px solid #9a4d34;
+    color: #5e2d1f;
 }
-
 
 .chip-creature {
-    background: #0048ff3d;
+    background: #4f86c633;
+    border: 1px solid #3d6798;
+    color: #24415f;
 }
 
-
 .chip-category {
-    background: #e6e6e6ab;
+    background: #7a7a7a25;
+    border: 1px solid #666;
+    color: #3f3f3f;
+}
+
+.chip-icon {
+    height: 12px;
+    width: 12px;
+    border-radius: 50%;
+    margin-right: 2px;
+    vertical-align: middle;
 }

@@ -118,12 +118,12 @@ function buildRowHtml(deckData: DeckData) {
 
 
 const manaSymbols = {
-    "W": "https://raw.githubusercontent.com/OmarJAH/magic-ma3/refs/heads/main/resources/images/assets/mana-symbols/W.svg",
-    "U": "https://raw.githubusercontent.com/OmarJAH/magic-ma3/refs/heads/main/resources/images/assets/mana-symbols/U.svg",
-    "G": "https://raw.githubusercontent.com/OmarJAH/magic-ma3/refs/heads/main/resources/images/assets/mana-symbols/G.svg",
-    "R": "https://raw.githubusercontent.com/OmarJAH/magic-ma3/refs/heads/main/resources/images/assets/mana-symbols/R.svg",
-    "B": "https://raw.githubusercontent.com/OmarJAH/magic-ma3/refs/heads/main/resources/images/assets/mana-symbols/B.svg",
-    "C": "https://raw.githubusercontent.com/OmarJAH/magic-ma3/refs/heads/main/resources/images/assets/mana-symbols/C.svg"
+    "W": "https://raw.githubusercontent.com/OmarJAH/magic-ma3/main/resources/images/assets/mana-symbols/W.svg",
+    "U": "https://raw.githubusercontent.com/OmarJAH/magic-ma3/main/resources/images/assets/mana-symbols/U.svg",
+    "G": "https://raw.githubusercontent.com/OmarJAH/magic-ma3/main/resources/images/assets/mana-symbols/G.svg",
+    "R": "https://raw.githubusercontent.com/OmarJAH/magic-ma3/main/resources/images/assets/mana-symbols/R.svg",
+    "B": "https://raw.githubusercontent.com/OmarJAH/magic-ma3/main/resources/images/assets/mana-symbols/B.svg",
+    "C": "https://raw.githubusercontent.com/OmarJAH/magic-ma3/main/resources/images/assets/mana-symbols/C.svg"
 }
 
 function getManaHtml(manaString: string) {
@@ -161,7 +161,7 @@ function getImageHtml(nr: number) {
     } else if (nr < 100) {
         fileName = "0" + nr;
     }
-    return `<img src="https://raw.githubusercontent.com/OmarJAH/magic-ma3/refs/heads/main/resources/images/deck-images-only/${fileName}.png"></img>`
+    return `<img src="https://raw.githubusercontent.com/OmarJAH/magic-ma3/main/resources/images/deck-images-only/${fileName}.png"></img>`
 }
 
 
@@ -206,22 +206,18 @@ const durationImagePaths: Record<Duration, string> = {
 }
 
 function getDurationHtml(duration: Duration) {
-    return `<img class="clock" src="https://raw.githubusercontent.com/OmarJAH/magic-ma3/refs/heads/main/resources/images/assets/clock/${durationImagePaths[duration]}"/>`;
+    return `<img class="clock" src="https://raw.githubusercontent.com/OmarJAH/magic-ma3/main/resources/images/assets/clock/${durationImagePaths[duration]}"/>`;
 }
 
 function htmlChip(text, className) {
     if (!text) {
         return ""
     }
-    let htmlIcon =""
-    if(className === "chip-set") {
-        htmlIcon = `<img class="chip-icon" src="${getImagePathRpgIcon("rising-sun")}"/>`
-    }
-    return `<div class="chip ${className}">${htmlIcon}${text}</div>`;
+    return `<div class="chip ${className}">${text}</div>`;
 }
 
 function getImagePathRpgIcon(rpgIcon: string) {
-    return `https://raw.githubusercontent.com/OmarJAH/magic-ma3/refs/heads/main/resources/images/assets/rpg-icons/${rpgIcon}.png`
+    return `https://raw.githubusercontent.com/OmarJAH/magic-ma3/main/resources/images/assets/rpg-icons/${rpgIcon}.png`
 }
 
 function htmlSet(string) {
@@ -246,12 +242,9 @@ function getTagsHtml(item: DeckData) {
 }
 
 function getWinconHtml(siegesbedingung: WinCondition) {
-    switch (siegesbedingung) {
-        case "Beatdown":
-            return beatdownHtml;
-        default:
-            return "";
-    }
+   return "<div><img src='" + getWinconImage(siegesbedingung) + "'/>"+siegesbedingung+"</div>"
 }
 
-const beatdownHtml = 'todo'
+function getWinconImage(siegesbedingung: WinCondition) {
+    return `https://raw.githubusercontent.com/OmarJAH/magic-ma3/main/resources/images/assets/win-conditions/${siegesbedingung.toLowerCase()}.png`
+}
