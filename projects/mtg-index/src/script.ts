@@ -62,7 +62,7 @@ function createDeckData(row: any) {
     return {
         nr: row.c[1].f,
         farben: row.c[3].v,
-        schwierigkeit: row.c[1].f == 5 ? "Extrem" : row.c[4].v,
+        schwierigkeit: row.c[1].f == 5 ? "Extrem" : row.c[4].v, // todo delete extrem hack
         spieldauer: row.c[5].v,
         siegesbedingung: row.c[6].v,
         setname: row.c[7]?.v,
@@ -111,7 +111,7 @@ function buildRowHtml(deckData: DeckData) {
         + `<td class="mana">${getManaHtml(deckData.farben)}</td>`
         + `<td class="difficulty">${getDifficultyHtml(deckData.schwierigkeit)}</td>`
         + `<td class="duration">${getDurationHtml(deckData.spieldauer)}</td>`
-        + `<td class="win-condition">${deckData.siegesbedingung}</td>` // todo
+        + `<td class="win-condition">${getWinconHtml(deckData.siegesbedingung)}</td>` // todo
         + `<td class="tags">${getTagsHtml(deckData)}</td>`
 
 }
@@ -128,6 +128,7 @@ const manaSymbols = {
 
 function getManaHtml(manaString: string) {
     let result = ""
+    // todo if letters > 3 -> make 2 rows, upper row has less symbols than lower row
     for (const letter of manaString) {
         result += `<img class="mana-symbol" src="${manaSymbols[letter]}"/>`;
     }
@@ -217,3 +218,12 @@ function getTagsHtml(item: DeckData) {
     return `${htmlSet(item.setname)}${htmlCardType(item.kartentypen)}${htmlCreatureType(item.kreaturentypen)}${htmlCategories(item.kategorien)}`;
 }
 
+function getWinconHtml(siegesbedingung: WinCondition) {
+    switch (siegesbedingung) {
+        case "Beatdown":
+            return beatdownHtml;
+        default: return "";
+    }
+}
+
+const beatdownHtml = 'todo'

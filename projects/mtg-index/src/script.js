@@ -1,107 +1,179 @@
-const page = 4; // CHANGE THIS VALUE FOR NEW PAGES - Every page gets automatically the right page name and the 36 x 2 decks on 2 pages
-const startIndex = 72 * (page - 1);
-const pageNames = [
-		'Alpha',
-		'Beta',
-		'Gamma',
-		'Delta',
-		'Epsilon',
-		'Zeta',
-		'Eta',
-		'Theta'
-];
-const pageName = pageNames[page - 1];
-
-function titles() {
-		document.getElementById('title1').append(pageName + " I");
-		document.getElementById('title2').append(pageName + " II");
+let firstDeckNr = 1;
+let fetchedData;
+async function getData() {
+    const url = `https://docs.google.com/spreadsheets/d/1epeuYV1FmJpVYUr30DVS8bPJ254rxmYtGfl3eooZm9M/gviz/tq?tqx=out:json&tq&gid=1153682861`;
+    try {
+        const req = await fetch(url);
+        fetchedData = JSON.parse((await req.text()).substring(47).slice(0, -2));
+        render();
+    }
+    catch (error) {
+        console.error(error.message);
+    }
 }
-
-titles();
-
-function htmlNumber(number) {
-		return `<td class="center" style="width: 50px;">${number}</td>`;
+function render() {
+    const tableData = transformJson(fetchedData);
+    console.log(tableData);
+    document.getElementById('my-table').innerHTML = "";
+    tableData.map(rowData => {
+        const el = document.createElement("tr");
+        el.innerHTML = buildRowHtml(rowData);
+        document.getElementById('my-table').appendChild(el);
+    });
 }
-
-// todo - make a function that takes the color letter as argument and returns the right URL for the SVG
-// todo - change SVG URL with our own hosted versions (mana-symbols folder in resources folder) once we have it public on github
+function renderPage(page) {
+    firstDeckNr = 18 * (page - 1) + 1;
+    this.render();
+}
+function transformJson(json) {
+    return json.table.rows.slice(firstDeckNr - 1, firstDeckNr + 17).map(createDeckData);
+}
+main();
+async function main() {
+    getData();
+}
+function createDeckData(row) {
+    return {
+        nr: row.c[1].f,
+        farben: row.c[3].v,
+        schwierigkeit: row.c[1].f == 5 ? "Extrem" : row.c[4].v, // todo delete extrem hack
+        spieldauer: row.c[5].v,
+        siegesbedingung: row.c[6].v,
+        setname: row.c[7]?.v,
+        kartentypen: row.c[8]?.v,
+        kreaturentypen: row.c[9]?.v,
+        kategorien: row.c[10]?.v,
+    };
+}
+function createChipsData(row) {
+    const chips = [];
+    if (row.c[7]?.v) {
+        chips.push({
+            value: row.c[7].v,
+            type: "set"
+        });
+    }
+    if (row.c[8]?.v) {
+        row.c[8].v.split(',').forEach(v => chips.push({
+            value: v,
+            type: "cardType"
+        }));
+    }
+    if (row.c[9]?.v) {
+        row.c[9].v.split(',').forEach(v => chips.push({
+            value: v,
+            type: "creatureType"
+        }));
+    }
+    if (row.c[10]?.v) {
+        row.c[10].v.split(',').forEach(v => chips.push({
+            value: v,
+            type: "category"
+        }));
+    }
+    return chips;
+}
+function buildRowHtml(deckData) {
+    return `<td class="nr">${deckData.nr}</td>`
+        + `<td class="image">${getImageHtml(deckData.nr)}</td>`
+        + `<td class="mana">${getManaHtml(deckData.farben)}</td>`
+        + `<td class="difficulty">${getDifficultyHtml(deckData.schwierigkeit)}</td>`
+        + `<td class="duration">${getDurationHtml(deckData.spieldauer)}</td>`
+        + `<td class="win-condition">${getWinconHtml(deckData.siegesbedingung)}</td>` // todo
+        + `<td class="tags">${getTagsHtml(deckData)}</td>`;
+}
 const manaSymbols = {
-		"W": "https://static.wikia.nocookie.net/mtgsalvation_gamepedia/images/8/8e/W.svg",
-		"U": "https://static.wikia.nocookie.net/mtgsalvation_gamepedia/images/9/9f/U.svg",
-		"G": "https://static.wikia.nocookie.net/mtgsalvation_gamepedia/images/8/88/G.svg",
-		"R": "https://static.wikia.nocookie.net/mtgsalvation_gamepedia/images/8/87/R.svg",
-		"B": "https://static.wikia.nocookie.net/mtgsalvation_gamepedia/images/2/2f/B.svg",
-		"C": "https://static.wikia.nocookie.net/mtgsalvation_gamepedia/images/1/1a/C.svg"
+    "W": "https://raw.githubusercontent.com/OmarJAH/magic-ma3/refs/heads/main/resources/images/assets/mana-symbols/W.svg",
+    "U": "https://raw.githubusercontent.com/OmarJAH/magic-ma3/refs/heads/main/resources/images/assets/mana-symbols/U.svg",
+    "G": "https://raw.githubusercontent.com/OmarJAH/magic-ma3/refs/heads/main/resources/images/assets/mana-symbols/G.svg",
+    "R": "https://raw.githubusercontent.com/OmarJAH/magic-ma3/refs/heads/main/resources/images/assets/mana-symbols/R.svg",
+    "B": "https://raw.githubusercontent.com/OmarJAH/magic-ma3/refs/heads/main/resources/images/assets/mana-symbols/B.svg",
+    "C": "https://raw.githubusercontent.com/OmarJAH/magic-ma3/refs/heads/main/resources/images/assets/mana-symbols/C.svg"
+};
+function getManaHtml(manaString) {
+    let result = "";
+    // todo if letters > 3 -> make 2 rows, upper row has less symbols than lower row
+    for (const letter of manaString) {
+        result += `<img class="mana-symbol" src="${manaSymbols[letter]}"/>`;
+    }
+    return result;
 }
-
-function htmlMana(manaString) {
-		let result = ""
-		for (const letter of manaString) {
-				result += `<img class="mana" src="${manaSymbols[letter]}"/>`;
-		}
-		return `<td class="center" style="width: 80px; min-width: 80px;">${result}</td>`;
+function getImageHtml(nr) {
+    let fileName = String(nr);
+    if (nr < 10) {
+        fileName = "00" + nr;
+    }
+    else if (nr < 100) {
+        fileName = "0" + nr;
+    }
+    return `<img src="https://raw.githubusercontent.com/OmarJAH/magic-ma3/refs/heads/main/resources/images/deck-images-only/${fileName}.png"></img>`;
 }
-
-function htmlDifficulty(difficultyString) {
-		return `<td class="center" style="width: 60px"><div class="diff ${difficultyString.toLowerCase()}"><div></div><div></div><div></div><div></div></div></td>`;
+function getDifficultyHtml(difficulty) {
+    let starHtml;
+    let difficultyCss;
+    let difficultyLabel;
+    switch (difficulty) {
+        case "Leicht":
+            difficultyLabel = "EASY";
+            starHtml = "★";
+            difficultyCss = "difficulty-easy";
+            break;
+        case "Mittel":
+            difficultyLabel = "MEDIUM";
+            starHtml = "★★";
+            difficultyCss = "difficulty-medium";
+            break;
+        case "Schwer":
+            difficultyLabel = "HARD";
+            starHtml = "★★★";
+            difficultyCss = "difficulty-hard";
+            break;
+        case "Extrem":
+            difficultyLabel = "EXTREM";
+            starHtml = "★★★★";
+            difficultyCss = "difficulty-extrem";
+            break;
+    }
+    return `<div class='difficulty-icon ${difficultyCss}'>
+<div class="difficulty-label">${difficultyLabel}</div>
+<div class="difficulty-stars">${starHtml}</div>
+</div>`;
 }
-
 const durationImagePaths = {
-		"schnell": "clock1.png",
-		"mittel": "clock2.png",
-		"langsam": "clock3.png",
-		"endlos": "clock4.png",
+    Schnell: "clock1.png",
+    Mittel: "clock2.png",
+    Langsam: "clock3.png",
+    Endlos: "clock4.png",
+};
+function getDurationHtml(duration) {
+    return `<img class="clock" src="https://raw.githubusercontent.com/OmarJAH/magic-ma3/refs/heads/main/resources/images/assets/clock/${durationImagePaths[duration]}"/>`;
 }
-
-function htmlDuration(durationString) {
-		// todo - the current url for asset images is from an online html editor, we should change this once we have public url for those images in GitHub (clock folder in resources folder)
-		return `<td class="center" style="width: 40px;"><img class="clock" src="https://assets.onecompiler.app/42y75gju6/42y75asmz/${durationImagePaths[durationString]}"/></td>`;
-}
-
 function htmlChip(text, className) {
-		if (!text) {
-				return ""
-		}
-		return `<div class="chip ${className}">${text}</div>`;
+    if (!text) {
+        return "";
+    }
+    return `<div class="chip ${className}">${text}</div>`;
 }
-
-function htmlVictory(victoryString) {
-		return `<td class="center" style="width: 50px;">${htmlChip(victoryString, 'chip-victory')}</td>`;
-}
-
 function htmlSet(string) {
-		return string.split(',').map(s => htmlChip(s, 'chip-set')).join('');
+    return string ? string.split(',').map(s => htmlChip(s, 'chip-set')).join('') : "";
 }
-
 function htmlCardType(string) {
-		return string.split(',').map(s => htmlChip(s, 'chip-card')).join('');
+    return string ? string.split(',').map(s => htmlChip(s, 'chip-card')).join('') : "";
 }
-
 function htmlCreatureType(string) {
-		return string.split(',').map(s => htmlChip(s, 'chip-creature')).join('');
+    return string ? string.split(',').map(s => htmlChip(s, 'chip-creature')).join('') : "";
 }
-
 function htmlCategories(string) {
-		return string.split(',').map(s => htmlChip(s, 'chip-category')).join('');
+    return string ? string.split(',').map(s => htmlChip(s, 'chip-category')).join('') : "";
 }
-
-
-function htmlText(item) {
-		return `<td class="center">${htmlSet(item.Setname)}${htmlCardType(item.Kartentypen)}${htmlCreatureType(item.Kreaturentypen)}${htmlCategories(item.Kategorien)}</td>`;
+function getTagsHtml(item) {
+    return `${htmlSet(item.setname)}${htmlCardType(item.kartentypen)}${htmlCreatureType(item.kreaturentypen)}${htmlCategories(item.kategorien)}`;
 }
-
-function createRowForItem(item) {
-		const htmlString = htmlNumber(item.Nr) + htmlMana(item.Farben) + htmlDifficulty(item.Schwierigkeit) + htmlDuration(item.Spieldauer.toLowerCase()) + htmlVictory(item.Siegesbedingung) + htmlText(item);
-		const newRow = document.createElement('tr');
-		newRow.innerHTML = htmlString.trim();
-		return newRow;
+function getWinconHtml(siegesbedingung) {
+    switch (siegesbedingung) {
+        case "Beatdown":
+            return beatdownHtml;
+        default: return "";
+    }
 }
-
-for (const item of data.slice(startIndex + 0, startIndex + 36)) {
-		document.getElementById('table1').append(createRowForItem(item));
-}
-for (const item of data.slice(startIndex + 36, startIndex + 72)) {
-		document.getElementById('table2').append(createRowForItem(item));
-}
-
-
+const beatdownHtml = 'todo';

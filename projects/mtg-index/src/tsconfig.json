@@ -1,5 +1,7 @@
 {
-  "include": ["script4.ts"],
+  "include": [
+    "script.ts"
+  ],
   "compilerOptions": {
     "target": "ESNext",
     "module": "esNext",
