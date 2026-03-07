@@ -111,7 +111,7 @@ function buildRowHtml(deckData: DeckData) {
         + `<td class="mana">${getManaHtml(deckData.farben)}</td>`
         + `<td class="difficulty">${getDifficultyHtml(deckData.schwierigkeit)}</td>`
         + `<td class="duration">${getDurationHtml(deckData.spieldauer)}</td>`
-        + `<td class="win-condition">${getWinconHtml(deckData.siegesbedingung)}</td>` // todo
+        + `<td class="win-condition">${getWinconHtml(deckData.siegesbedingung)}</td>`
         + `<td class="tags">${getTagsHtml(deckData)}</td>`
 
 }
@@ -130,10 +130,8 @@ function getManaHtml(manaString: string) {
     let result = ""
     if (manaString.length > 3) {
         const firstRowLetters = manaString.slice(0, manaString.length / 2);
-        const firstRowClass = manaString.length === 4 ? "lefty" : "";
         const secondRowLetters = manaString.slice(manaString.length / 2);
-        const secondRowClass = manaString.length === 4 ? "righty" : "";
-        return createManaSymbolRowHtml(firstRowLetters, firstRowClass) + createManaSymbolRowHtml(secondRowLetters, secondRowClass);
+        return createManaSymbolRowHtml(firstRowLetters) + createManaSymbolRowHtml(secondRowLetters);
     } else {
         for (const letter of manaString) {
             result += getManaSymbolHtml(letter)
@@ -142,12 +140,12 @@ function getManaHtml(manaString: string) {
     }
 }
 
-function createManaSymbolRowHtml(manaString: string, className: string = "") {
+function createManaSymbolRowHtml(manaString: string) {
     let manaSymbolsHtml = "";
     for (const letter of manaString) {
         manaSymbolsHtml += getManaSymbolHtml(letter)
     }
-    return '<div class="mana-symbol-row ' + className + '">' + manaSymbolsHtml + '</div>';
+    return '<div class="mana-symbol-row">' + manaSymbolsHtml + '</div>';
 }
 
 function getManaSymbolHtml(manaLetter: string) {
@@ -216,10 +214,6 @@ function htmlChip(text, className) {
     return `<div class="chip ${className}">${text}</div>`;
 }
 
-function getImagePathRpgIcon(rpgIcon: string) {
-    return `https://raw.githubusercontent.com/OmarJAH/magic-ma3/main/resources/images/assets/rpg-icons/${rpgIcon}.png`
-}
-
 function htmlSet(string) {
     return string ? string.split(',').map(s => htmlChip(s, 'chip-set')).join('') : "";
 }
@@ -242,11 +236,9 @@ function getTagsHtml(item: DeckData) {
 }
 
 function getWinconHtml(siegesbedingung: WinCondition) {
-   return "<div class='wincon-"+siegesbedingung.toLowerCase()+"'><img class='wincon-icon' src='" + getWinconImage(siegesbedingung) + "'/>"+siegesbedingung+"</div>"
+    return "<div class='wincon-" + siegesbedingung.toLowerCase() + "'><div><img class='wincon-icon' src='" + getWinconImage(siegesbedingung) + "'/></div>" + siegesbedingung + "</div>"
 }
 
 function getWinconImage(siegesbedingung: WinCondition) {
     return `https://raw.githubusercontent.com/OmarJAH/magic-ma3/main/resources/images/assets/rpg-icons/${siegesbedingung.toLowerCase()}.png`
 }
-
-// todo eventuell wincondition icon alleine in chip- text rechts daneben

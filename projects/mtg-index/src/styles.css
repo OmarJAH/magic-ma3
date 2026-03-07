@@ -283,7 +283,7 @@ div.single-box {
 }
 
 .nr {
-    width: 56px;
+    width: 50px;
     text-align: center;
     font-size: 18px;
     font-weight: bold;
@@ -295,6 +295,7 @@ div.single-box {
 }
 
 .image {
+    width: 76px;
     > img {
         height: 55px;
         border: solid 1px black;
@@ -311,14 +312,6 @@ div.single-box {
 
     .mana-symbol-row:first-child {
         margin-bottom: 2px;
-    }
-
-    .mana-symbol-row.lefty {
-        padding-right: 10px;
-    }
-
-    .mana-symbol-row.righty {
-        padding-left: 10px;
     }
 }
 
@@ -442,91 +435,95 @@ div.single-box {
 .chip-set {
     background: #3aa76d53;
     border: 1px solid #2f7e53;
-    color: #1f4f35;
+    color: #11311f;
 }
 
 .chip-card {
     background: #c96a4a55;
     border: 1px solid #9a4d34;
-    color: #5e2d1f;
+    color: #391b13;
 }
 
 .chip-creature {
     background: #4f86c653;
     border: 1px solid #3d6798;
-    color: #24415f;
+    color: #142434;
 }
 
 .chip-category {
     background: #7a7a7a25;
     border: 1px solid #666;
-    color: #3f3f3f;
+    color: #212121;
 }
 
 .win-condition {
-    text-align: center;
     font-size: 12px;
     font-weight: bold;
-    padding-right: 10px;
+    padding: 3px;
     width: 110px;
 
     > div {
-        height: 34px;
-        width: 102px;
+        height: 28px;
         display: inline-flex;
         align-items: center;
-        border-radius: 8px;
         white-space: nowrap;
-        color: #fff;
         justify-content: center;
+        vertical-align: middle;
+
+        > div {
+            margin-right: 4px;
+            height: 28px;
+            width: 28px;
+            border-radius: 6px;
+            color: #fff;
+            align-items: center;
+            display: inline-flex;
+            justify-content: center;
+        }
     }
 }
 
 .wincon-icon {
-    height: 24px;
-    margin-right: 4px;
-    vertical-align: middle;
+    height: 22px;
 }
 
-.wincon-beatdown {
-    background-color: #E53935;
+.wincon-beatdown > div {
+    background-color: #E53936;
     text-shadow: 0 1px 1px #760c08;
     border: 1px solid #760c08;
 }
 
-.wincon-spellslinger {
+.wincon-spellslinger > div {
     background-color: #3949AB;
     text-shadow: 0 1px 1px #1A237E;
     border: 1px solid #1A237E;
-
-
 }
 
-.wincon-lifedrain {
+.wincon-lifedrain > div {
     background-color: #6A1B9A;
     text-shadow: 0 1px 1px #3a045a;
     border: 1px solid #3a045a;
 }
 
-.wincon-toxic {
+.wincon-toxic > div {
     background-color: #2E7D32;
     text-shadow: 0 1px 1px #035709;
     border: 1px solid #035709;
 }
 
-.wincon-mill {
+.wincon-mill > div {
     background-color: #1565C0;
     text-shadow: 0 1px 1px #02356f;
     border: 1px solid #02356f;
 }
 
-.wincon-support {
+.wincon-support > div {
     background-color: #fbc800;
     text-shadow: 0 1px 1px #a37e00;
     border: 1px solid #a37e00;
 }
 
-.wincon-wincon {
+.wincon-wincon > div {
     background-color: #d49e00;
     text-shadow: 0 1px 1px #8e6700;
     border: 1px solid #8e6700;
